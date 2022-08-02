@@ -1,14 +1,22 @@
 {
   "name": "simple-tool",
   "publisher": "kokota",
+  "author": {
+    "name": "Kokota"
+  },
   "displayName": "simple-tool",
   "description": "A simple tool about open site, insert image, snippets",
   "version": "0.0.1",
-  "icon": "./src/image/cat.png",
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KokoTa/simple-tool"
+},
   "engines": {
     "vscode": "^1.69.0"
   },
   "categories": [
+    "Snippets",
     "Other"
   ],
   "activationEvents": [
