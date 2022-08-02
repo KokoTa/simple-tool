@@ -2,11 +2,11 @@
   "name": "simple-tool",
   "publisher": "kokota",
   "author": {
-    "name": "Kokota"
+    "name": "kokota"
   },
   "displayName": "simple-tool",
   "description": "A simple tool about open site, insert image, snippets",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icon": "icon.png",
   "repository": {
     "type": "git",
@@ -40,15 +40,15 @@
     "snippets": [
       {
         "language": "javascript",
-        "path": "./src/snippets/snippets.json"
+        "path": "./snippets/snippets.json"
       },
       {
         "language": "typescript",
-        "path": "./src/snippets/snippets.json"
+        "path": "./snippets/snippets.json"
       },
       {
         "language": "vue",
-        "path": "./src/snippets/snippets.json"
+        "path": "./snippets/snippets.json"
       }
     ]
   },
