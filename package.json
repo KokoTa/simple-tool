@@ -6,7 +6,7 @@
   },
   "displayName": "simple-tool",
   "description": "A simple tool about open site, insert image, snippets",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "icon": "icon.png",
   "repository": {
     "type": "git",
