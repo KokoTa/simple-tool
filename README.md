@@ -28,3 +28,9 @@ if you want use snippets
 
 1. focus your editor
 2. input `simple.xxx`
+
+if you want use translation:
+
+1. open quick picks
+2. select `simple:translate`
+3. input your query

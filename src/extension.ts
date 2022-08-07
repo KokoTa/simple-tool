@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { createOpenSiteQuickPick } from './search';
 import { createInsertPlaceholderQuickPick } from './placeholder';
+import { createTranslateInputBox } from './translate';
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -8,12 +9,17 @@ export function activate(context: vscode.ExtensionContext) {
 		createOpenSiteQuickPick();
 	});
 
-	const insertPlaceholder = vscode.commands.registerCommand('simple.placeholder', () => {
+	const placeholder = vscode.commands.registerCommand('simple.placeholder', () => {
 		createInsertPlaceholderQuickPick();
 	});
 
+	const translate = vscode.commands.registerCommand('simple.translate', () => {
+		createTranslateInputBox();
+	});
+
 	context.subscriptions.push(openSite);
-	context.subscriptions.push(insertPlaceholder);
+	context.subscriptions.push(placeholder);
+	context.subscriptions.push(translate);
 }
 
 

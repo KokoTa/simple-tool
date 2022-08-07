@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.0.4]
+
+- Add translation
+
 ## [0.0.3]
 
 - update README
