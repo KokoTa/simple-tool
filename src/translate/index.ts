@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
 import { translateApi } from './config';
 import * as md5 from 'md5';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
-function initBaiduConfig(query: string): BaiduTranslateConfig {
+async function createBaiduTranslateRequest(query: string): Promise<string> {
   const params: BaiduTranslateConfig = {
     q: query,
     from: 'auto',
@@ -12,11 +12,9 @@ function initBaiduConfig(query: string): BaiduTranslateConfig {
     salt: Math.random().toString().slice(2),
     sign: ''
   };
-  const sign = md5(
-    params.appid + params.q + params.salt + 'u7y_jBpmOtuvA9bTBrx7'
-  );
-  params.sign = sign;
-  return params;
+  params.sign = md5(params.appid + params.q + params.salt + 'u7y_jBpmOtuvA9bTBrx7');
+  const res = await axios.get(translateApi.baidu, { params });
+  return res.data.trans_result[0].dst;
 }
 
 export const createTranslateInputBox = async () => {
@@ -26,12 +24,35 @@ export const createTranslateInputBox = async () => {
       return text.length > 0 ? null : 'Query is empty';
     }
   });
+  const res = await createBaiduTranslateRequest(query || '');
+  res && vscode.window.showInformationMessage(res);
+};
 
-  const res = await axios.get(translateApi.baidu, {
-    params: initBaiduConfig(query || '')
+export const createHoverTranslate = () => {
+  return vscode.languages.registerHoverProvider('javascript', {
+    async provideHover(document, position, token) {
+      const editor = vscode.window.activeTextEditor;
+
+      if (!editor) {
+        return new vscode.Hover('');
+      }
+
+      const selection = editor.selection;
+      if (selection.isEmpty) {
+        return new vscode.Hover('');
+      }
+
+      const text = document.getText(selection);
+      if (!text) {
+        return new vscode.Hover('');
+      }
+
+      const res = await createBaiduTranslateRequest(text);
+      return new vscode.Hover(res);
+    }
   });
+};
 
-  if (res.data?.trans_result) {
-    vscode.window.showInformationMessage(res.data.trans_result[0].dst);
-  }
+export const createMenuTranslate = () => {
+
 };

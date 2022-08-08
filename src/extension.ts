@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { createOpenSiteQuickPick } from './search';
 import { createInsertPlaceholderQuickPick } from './placeholder';
-import { createTranslateInputBox } from './translate';
+import { createHoverTranslate, createTranslateInputBox } from './translate';
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -16,10 +16,12 @@ export function activate(context: vscode.ExtensionContext) {
 	const translate = vscode.commands.registerCommand('simple.translate', () => {
 		createTranslateInputBox();
 	});
+	const hoverTranslate = createHoverTranslate();
 
 	context.subscriptions.push(openSite);
 	context.subscriptions.push(placeholder);
 	context.subscriptions.push(translate);
+	context.subscriptions.push(hoverTranslate);
 }
 
 

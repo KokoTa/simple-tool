@@ -20,6 +20,7 @@
     "Other"
   ],
   "activationEvents": [
+    "onLanguage:javascript",
     "onCommand:simple.openSite",
     "onCommand:simple.placeholder",
     "onCommand:simple.translate"
