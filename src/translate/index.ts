@@ -1,23 +1,29 @@
 import * as vscode from 'vscode';
 import { translateApi } from './config';
 import * as md5 from 'md5';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 async function createBaiduTranslateRequest(query: string): Promise<string> {
-  const params: BaiduTranslateConfig = {
-    q: query,
-    from: 'auto',
-    to: 'zh',
-    appid: '20220807001297699',
-    salt: Math.random().toString().slice(2),
-    sign: ''
-  };
-  params.sign = md5(params.appid + params.q + params.salt + 'u7y_jBpmOtuvA9bTBrx7');
-  const res = await axios.get(translateApi.baidu, { params });
-  return res.data.trans_result[0].dst;
+  try {
+    const params: BaiduTranslateConfig = {
+      q: query,
+      from: 'auto',
+      to: 'zh',
+      appid: '20220807001297699',
+      salt: Math.random().toString().slice(2),
+      sign: ''
+    };
+    params.sign = md5(params.appid + params.q + params.salt + 'u7y_jBpmOtuvA9bTBrx7');
+    const res = await axios.get(translateApi.baidu, { params });
+    const results = res.data.trans_result?.map((item: BaiduTranslateResult) => item.dst);
+    return results!.join('\n');
+  } catch (error) {
+    console.log(error);
+    return '';
+  }
 }
 
-export const createTranslateInputBox = async () => {
+export const createTranslateByInputBox = async () => {
   const query = await vscode.window.showInputBox({
     placeHolder: 'Input query',
     validateInput: (text: string) => {
@@ -28,8 +34,8 @@ export const createTranslateInputBox = async () => {
   res && vscode.window.showInformationMessage(res);
 };
 
-export const createHoverTranslate = () => {
-  return vscode.languages.registerHoverProvider('javascript', {
+export const createTranslateByHover = () => {
+  return vscode.languages.registerHoverProvider('*', {
     async provideHover(document, position, token) {
       const editor = vscode.window.activeTextEditor;
 
@@ -53,6 +59,41 @@ export const createHoverTranslate = () => {
   });
 };
 
-export const createMenuTranslate = () => {
+const outputChannel = vscode.window.createOutputChannel('simple-tool-translate');
 
+export const createTranslateByMenu = async () => {
+  const editor = vscode.window.activeTextEditor;
+  if (!editor) { return; }
+
+  const selection = editor.selection;
+  const text = editor.document.getText(selection);
+  if (!text) { return; }
+
+  await vscode.window.withProgress({
+    title: 'Translating',
+    location: vscode.ProgressLocation.Notification
+  }, async () => {
+    const res = await createBaiduTranslateRequest(text);
+    outputChannel.show();
+    outputChannel.appendLine(res);
+  });
+};
+
+export const createTranslateByMenuReplace = async () => {
+  const editor = vscode.window.activeTextEditor;
+  if (!editor) { return; }
+
+  const selection = editor.selection;
+  const text = editor.document.getText(selection);
+  if (!text) { return; }
+
+  await vscode.window.withProgress({
+    title: 'Translating',
+    location: vscode.ProgressLocation.Notification
+  }, async () => {
+    const res = await createBaiduTranslateRequest(text);
+    await editor.edit((editBuilder) => {
+      editBuilder.replace(selection, res);
+    });
+  });
 };

@@ -6,7 +6,7 @@
   },
   "displayName": "simple-tool",
   "description": "A simple tool about open site, insert image, snippets",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "icon": "icon.png",
   "repository": {
     "type": "git",
@@ -20,17 +20,14 @@
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:javascript",
-    "onCommand:simple.openSite",
-    "onCommand:simple.placeholder",
-    "onCommand:simple.translate"
+    "*"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "simple.openSite",
-        "title": "openSite",
+        "command": "simple.site",
+        "title": "site",
         "category": "simple"
       },
       {
@@ -40,10 +37,32 @@
       },
       {
         "command": "simple.translate",
-        "title": "translate",
+        "title": "translateByInput",
+        "category": "simple"
+      },
+      {
+        "command": "simple.translateByMenu",
+        "title": "translateByMenu",
+        "category": "simple"
+      },
+      {
+        "command": "simple.translateByMenuReplace",
+        "title": "translateByMenuReplace",
         "category": "simple"
       }
     ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "simple.translateByMenu",
+          "group": "navigation"
+        },
+        {
+          "command": "simple.translateByMenuReplace",
+          "group": "navigation"
+        }
+      ]
+    },
     "snippets": [
       {
         "language": "javascript",

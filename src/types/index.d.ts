@@ -11,3 +11,8 @@ declare interface BaiduTranslateConfig {
   salt: string
   sign: string
 }
+
+declare interface BaiduTranslateResult {
+  dst: string
+  src: string
+}

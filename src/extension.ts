@@ -1,11 +1,11 @@
 import * as vscode from 'vscode';
 import { createOpenSiteQuickPick } from './search';
 import { createInsertPlaceholderQuickPick } from './placeholder';
-import { createHoverTranslate, createTranslateInputBox } from './translate';
+import { createTranslateByHover, createTranslateByInputBox, createTranslateByMenu, createTranslateByMenuReplace } from './translate';
 
 export function activate(context: vscode.ExtensionContext) {
 
-	const openSite = vscode.commands.registerCommand('simple.openSite', () => {
+	const site = vscode.commands.registerCommand('simple.site', () => {
 		createOpenSiteQuickPick();
 	});
 
@@ -13,15 +13,26 @@ export function activate(context: vscode.ExtensionContext) {
 		createInsertPlaceholderQuickPick();
 	});
 
-	const translate = vscode.commands.registerCommand('simple.translate', () => {
-		createTranslateInputBox();
+	const translateByInput = vscode.commands.registerCommand('simple.translateByInput', () => {
+		createTranslateByInputBox();
 	});
-	const hoverTranslate = createHoverTranslate();
 
-	context.subscriptions.push(openSite);
+	const translateByHover = createTranslateByHover();
+
+	const translateByMenu = vscode.commands.registerCommand('simple.translateByMenu', () => {
+		createTranslateByMenu();
+	});
+
+	const translateByMenuReplace = vscode.commands.registerCommand('simple.translateByMenuReplace', () => {
+		createTranslateByMenuReplace();
+	});
+
+	context.subscriptions.push(site);
 	context.subscriptions.push(placeholder);
-	context.subscriptions.push(translate);
-	context.subscriptions.push(hoverTranslate);
+	context.subscriptions.push(translateByInput);
+	context.subscriptions.push(translateByHover);
+	context.subscriptions.push(translateByMenu);
+	context.subscriptions.push(translateByMenuReplace);
 }
 
 
