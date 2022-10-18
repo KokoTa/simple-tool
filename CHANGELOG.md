@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.0.6]
+
+- Fix bug
+
 ## [0.0.5]
 
 - Add translation menu options

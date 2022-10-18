@@ -16,7 +16,7 @@ async function createBaiduTranslateRequest(query: string): Promise<string> {
     params.sign = md5(params.appid + params.q + params.salt + 'u7y_jBpmOtuvA9bTBrx7');
     const res = await axios.get(translateApi.baidu, { params });
     const results = res.data.trans_result?.map((item: BaiduTranslateResult) => item.dst);
-    return results!.join('\n');
+    return results && results!.join('\n') || 'Server Error';
   } catch (error) {
     console.log(error);
     return '';

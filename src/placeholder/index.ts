@@ -25,7 +25,7 @@ export const createInsertPlaceholderQuickPick = async () => {
     const placeholder = placeholders[placeholderName];
     const targetUrl = placeholder
       .replace('?x?', `${width}x${height}`)
-      .replace('?/?', `${width}x${height}`);
+      .replace('?/?', `${width}/${height}`);
     const activeEditor = vscode.window.activeTextEditor;
     activeEditor?.edit((editBuilder) => {
       activeEditor?.selections.forEach(selection => {

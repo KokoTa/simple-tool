@@ -3,6 +3,8 @@ import { createOpenSiteQuickPick } from './search';
 import { createInsertPlaceholderQuickPick } from './placeholder';
 import { createTranslateByHover, createTranslateByInputBox, createTranslateByMenu, createTranslateByMenuReplace } from './translate';
 
+// publisher key: vq5li4pdl2hje2pvetejmyhtnfc5pith3vwbug34ns322cjwpxha
+
 export function activate(context: vscode.ExtensionContext) {
 
 	const site = vscode.commands.registerCommand('simple.site', () => {

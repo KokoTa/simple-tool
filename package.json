@@ -6,7 +6,7 @@
   },
   "displayName": "simple-tool",
   "description": "A simple tool about open site, insert image, snippets",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "icon": "icon.png",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
         "category": "simple"
       },
       {
-        "command": "simple.translate",
+        "command": "simple.translateByInput",
         "title": "translateByInput",
         "category": "simple"
       },
